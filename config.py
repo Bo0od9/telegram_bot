@@ -1,1 +1,1 @@
-BOT_TOKEN = 'none'
+BOT_TOKEN = ''
