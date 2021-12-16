@@ -10,21 +10,20 @@ def get_dict():  # создаем словарь используемых сим
     return ''.join(d)
 
 
-def caesar_encode(shift, text):
-    alpha = get_dict()
-    n = shift
-    s = text.strip()
+def caesar_encode(text, shift):
+    dictionary = get_dict()
+    user_text = text.strip()
     res = ''
-    for c in s:
-        res += alpha[(alpha.index(c) + n) % len(alpha)]
+    for c in user_text:
+        res += dictionary[(dictionary.index(c) + shift) % len(dictionary)]
     return res
 
 
-def caesar_decode(shift, text):
-    alpha = get_dict()
-    n = shift * -1
-    s = text.strip()
+def caesar_decode(text, shift):
+    dictionary = get_dict()
+    shift = shift * -1
+    user_text = text.strip()
     res = ''
-    for c in s:
-        res += alpha[(alpha.index(c) + n) % len(alpha)]
+    for c in user_text:
+        res += dictionary[(dictionary.index(c) + shift) % len(dictionary)]
     return res
