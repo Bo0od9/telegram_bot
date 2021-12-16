@@ -37,12 +37,15 @@ def mess(message):
     elif get_messsage_bot == 'шифр виженера' and decode_or_encode == 1:
         markup = types.ReplyKeyboardRemove(selective=False)
         bot.send_message(message.chat.id,
-                         'Текст должен быть на латинице, возможно использование цифр и специальных символов!',parse_mode='html', reply_markup=markup)
-        bot.send_message(message.chat.id, '<b>Введите текст для шифрования:</b>', parse_mode='html',reply_markup=markup)
+                         'Текст должен быть на латинице, возможно использование цифр и специальных символов!',
+                         parse_mode='html', reply_markup=markup)
+        bot.send_message(message.chat.id, '<b>Введите текст для шифрования:</b>', parse_mode='html',
+                         reply_markup=markup)
 
         def add_text(message):
             text = message.text
             bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html')
+
             def add_key(message):
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
                 btn1 = types.KeyboardButton('Зашифровать сообщение')
@@ -52,6 +55,7 @@ def mess(message):
                 key = message.text
                 msg_to_user = main_encode(text, key)
                 bot.send_message(message.chat.id, msg_to_user, parse_mode='html', reply_markup=markup)
+
             bot.register_next_step_handler(message, add_key)
 
         bot.register_next_step_handler(message, add_text)
@@ -67,12 +71,15 @@ def mess(message):
     elif get_messsage_bot == 'шифр виженера' and decode_or_encode == 2:
         markup = types.ReplyKeyboardRemove(selective=False)
         bot.send_message(message.chat.id,
-                         'Текст должен быть на латинице, возможно использование цифр и специальных символов!',parse_mode='html', reply_markup=markup)
-        bot.send_message(message.chat.id, '<b>Введите текст для расшифрования:</b>', parse_mode='html',reply_markup=markup)
+                         'Текст должен быть на латинице, возможно использование цифр и специальных символов!',
+                         parse_mode='html', reply_markup=markup)
+        bot.send_message(message.chat.id, '<b>Введите текст для расшифрования:</b>', parse_mode='html',
+                         reply_markup=markup)
 
         def add_text(message):
             text = message.text
             bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html', reply_markup=markup)
+
             def add_key(message):
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
                 btn1 = types.KeyboardButton('Зашифровать сообщение')
@@ -82,6 +89,7 @@ def mess(message):
                 key = message.text
                 msg_to_user = main_decode(text, key)
                 bot.send_message(message.chat.id, msg_to_user, parse_mode='html', reply_markup=markup)
+
             bot.register_next_step_handler(message, add_key)
 
         bot.register_next_step_handler(message, add_text)
