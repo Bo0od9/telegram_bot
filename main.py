@@ -1,20 +1,20 @@
 import telebot
 from telebot import types
 from config import BOT_TOKEN
-from vigenere_chipher import main_decode, main_encode
+from vigenere_chipher import main_decode, main_encode, get_dict
 from caesar_chipher import caesar_encode, caesar_decode
 
 bot = telebot.TeleBot(BOT_TOKEN)
+markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+btn1 = types.KeyboardButton('Зашифровать сообщение')
+btn2 = types.KeyboardButton('Расшифровать сообщение')
+btn3 = types.KeyboardButton('О боте')
+markup.add(btn1, btn2, btn3)
 decode_or_encode = None
 
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    btn1 = types.KeyboardButton('Зашифровать сообщение')
-    btn2 = types.KeyboardButton('Расшифровать сообщение')
-    btn3 = types.KeyboardButton('О боте')
-    markup.add(btn1, btn2, btn3)
     send_mess = f"<b>Привет {message.from_user.first_name}</b>!\nЧем могу помочь?"
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
@@ -48,11 +48,7 @@ def mess(message):
             bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html')
 
             def add_key(message):
-                markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-                btn1 = types.KeyboardButton('Зашифровать сообщение')
-                btn2 = types.KeyboardButton('Расшифровать сообщение')
-                btn3 = types.KeyboardButton('О боте')
-                markup.add(btn1, btn2, btn3)
+                global markup
                 key = message.text
                 msg_to_user = main_encode(text, key)
                 bot.send_message(message.chat.id, msg_to_user, parse_mode='html', reply_markup=markup)
@@ -73,11 +69,7 @@ def mess(message):
             bot.send_message(message.chat.id, '<b>Введите сдвиг:</b>', parse_mode='html')
 
             def add_key(message):
-                markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-                btn1 = types.KeyboardButton('Зашифровать сообщение')
-                btn2 = types.KeyboardButton('Расшифровать сообщение')
-                btn3 = types.KeyboardButton('О боте')
-                markup.add(btn1, btn2, btn3)
+                global markup
                 key = message.text
                 msg_to_user = caesar_encode(text, int(key))
                 bot.send_message(message.chat.id, msg_to_user, parse_mode='html', reply_markup=markup)
@@ -104,14 +96,10 @@ def mess(message):
 
         def add_text(message):
             text = message.text
-            bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html', reply_markup=markup)
+            bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html')
 
             def add_key(message):
-                markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-                btn1 = types.KeyboardButton('Зашифровать сообщение')
-                btn2 = types.KeyboardButton('Расшифровать сообщение')
-                btn3 = types.KeyboardButton('О боте')
-                markup.add(btn1, btn2, btn3)
+                global markup
                 key = message.text
                 msg_to_user = main_decode(text, key)
                 bot.send_message(message.chat.id, msg_to_user, parse_mode='html', reply_markup=markup)
@@ -132,11 +120,7 @@ def mess(message):
             bot.send_message(message.chat.id, '<b>Введите сдвиг:</b>', parse_mode='html')
 
             def add_key(message):
-                markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-                btn1 = types.KeyboardButton('Зашифровать сообщение')
-                btn2 = types.KeyboardButton('Расшифровать сообщение')
-                btn3 = types.KeyboardButton('О боте')
-                markup.add(btn1, btn2, btn3)
+                global markup
                 key = message.text
                 msg_to_user = caesar_decode(text, int(key))
                 bot.send_message(message.chat.id, msg_to_user, parse_mode='html', reply_markup=markup)
@@ -144,6 +128,9 @@ def mess(message):
             bot.register_next_step_handler(message, add_key)
 
         bot.register_next_step_handler(message, add_text)
+    elif get_messsage_bot == 'о боте':
+        bot.send_message(message.chat.id,
+                         f'Бот умеет шифровать и расшифровывать текст на латинице с помощью шифра Цезаря и шифра Виженера. Бот создан в качестве итогового проекта по дисциплине АиП. Словарь допустимых символов: {get_dict()}')
 
 
 # bot.infinity_polling()
