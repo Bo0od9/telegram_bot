@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 from config import BOT_TOKEN
-from vigenere_chipher import main
+from vigenere_chipher import main_decode, main_encode
 
 bot = telebot.TeleBot(BOT_TOKEN)
 decode_or_encode = None
@@ -45,9 +45,8 @@ def mess(message):
             bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html',reply_markup=markup)
             def add_key(message):
                 key = message.text
-                print(text, key)
-                output = main(text, key)
-                print(output)
+                msg_to_user = main_encode(text, key)
+                bot.send_message(message.chat.id, msg_to_user, parse_mode='html')
             bot.register_next_step_handler(message, add_key)
 
         bot.register_next_step_handler(message, add_text)
@@ -71,7 +70,8 @@ def mess(message):
             bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html',reply_markup=markup)
             def add_key(message):
                 key = message.text
-                print(text, key)
+                msg_to_user = main_decode(text, key)
+                bot.send_message(message.chat.id, msg_to_user, parse_mode='html')
             bot.register_next_step_handler(message, add_key)
 
         bot.register_next_step_handler(message, add_text)
