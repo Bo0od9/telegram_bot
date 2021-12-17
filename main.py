@@ -4,23 +4,29 @@ from config import BOT_TOKEN
 from vigenere_chipher import main_decode, main_encode, get_dict
 from caesar_chipher import caesar_encode, caesar_decode
 
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot(BOT_TOKEN)  # токен
 markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 btn1 = types.KeyboardButton('Зашифровать сообщение')
 btn2 = types.KeyboardButton('Расшифровать сообщение')
 btn3 = types.KeyboardButton('О боте')
 markup.add(btn1, btn2, btn3)
-decode_or_encode = None
+decode_or_encode = None  # Указывает что сделать с текстом, если == 1 зашифровать если == 2 расшифровать
 
 
-@bot.message_handler(commands=['start', 'help'])
+@bot.message_handler(commands=['start'])
 def start(message):
+    '''
+    Обрабатывает команду /start, отправляет приветственное сообщение, добавляет клавиши.
+    '''
     send_mess = f"<b>Привет {message.from_user.first_name}</b>!\nЧем могу помочь?"
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
 def mess(message):
+    '''
+    Обрабатывает пользоваьельский ввод.
+    '''
     get_messsage_bot = message.text.strip().lower()
     global decode_or_encode
 
@@ -44,10 +50,16 @@ def mess(message):
                          reply_markup=markup)
 
         def add_text(message):
+            '''
+            Получает пользовательский текст.
+            '''
             text = message.text
             bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html')
 
             def add_key(message):
+                '''
+                Получает ключ от пользователя и отправляет зашифрованый текст.
+                '''
                 global markup
                 key = message.text
                 msg_to_user = main_encode(text, key)
@@ -65,10 +77,16 @@ def mess(message):
                          reply_markup=markup)
 
         def add_text(message):
+            '''
+            Получает пользовательский текст.
+            '''
             text = message.text
             bot.send_message(message.chat.id, '<b>Введите сдвиг:</b>', parse_mode='html')
 
             def add_key(message):
+                '''
+                Получает от пользователя число на которое нужно сдвинуть текст и отправляет зашифрованное сообщение.
+                '''
                 global markup
                 key = message.text
                 msg_to_user = caesar_encode(text, int(key))
@@ -95,10 +113,16 @@ def mess(message):
                          reply_markup=markup)
 
         def add_text(message):
+            '''
+            Получает пользовательский текст.
+            '''
             text = message.text
             bot.send_message(message.chat.id, '<b>Введите секретный ключ:</b>', parse_mode='html')
 
             def add_key(message):
+                '''
+                Получает от пользователя секретный ключ и отправляет пользователю расшифрованное сообщение.
+                '''
                 global markup
                 key = message.text
                 msg_to_user = main_decode(text, key)
@@ -116,10 +140,16 @@ def mess(message):
                          reply_markup=markup)
 
         def add_text(message):
+            '''
+            Получает от пользователя текст.
+            '''
             text = message.text
             bot.send_message(message.chat.id, '<b>Введите сдвиг:</b>', parse_mode='html')
 
             def add_key(message):
+                '''
+                Получает от пользователя число на которое нужно сдвинуть текст и отправляет расшифрованное сообщение.
+                '''
                 global markup
                 key = message.text
                 msg_to_user = caesar_decode(text, int(key))
@@ -130,7 +160,7 @@ def mess(message):
         bot.register_next_step_handler(message, add_text)
     elif get_messsage_bot == 'о боте':
         bot.send_message(message.chat.id,
-                         f'Бот умеет шифровать и расшифровывать текст на латинице с помощью шифра Цезаря и шифра Виженера. Бот создан в качестве итогового проекта по дисциплине АиП. Словарь допустимых символов: {get_dict()}')
+                         f'Бот умеет зашифровывать и расшифровывать текст на латинице с помощью шифра Цезаря и шифра Виженера. Бот создан в качестве итогового проекта по дисциплине АиП. Словарь допустимых символов: {get_dict()}')
 
 
 # bot.infinity_polling()
