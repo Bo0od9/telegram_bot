@@ -1,4 +1,7 @@
 def get_dict():
+    '''
+    Создает словарь используемых символов.
+    '''
     d = [' ', '.', ',', '?' '!', ':', ';']
     i = 0
     for i in range(48, 58):
@@ -11,6 +14,9 @@ def get_dict():
 
 
 def caesar_encode(text, shift):
+    '''
+    Зашифровывает текст.
+    '''
     dictionary = get_dict()
     user_text = text.strip()
     res = ''
@@ -20,6 +26,9 @@ def caesar_encode(text, shift):
 
 
 def caesar_decode(text, shift):
+    '''
+    Расшифровывает текст.
+    '''
     dictionary = get_dict()
     shift = shift * -1
     user_text = text.strip()

@@ -10,7 +10,7 @@ btn1 = types.KeyboardButton('Зашифровать сообщение')
 btn2 = types.KeyboardButton('Расшифровать сообщение')
 btn3 = types.KeyboardButton('О боте')
 markup.add(btn1, btn2, btn3)
-decode_or_encode = None  # Указывает что сделать с текстом, если == 1 зашифровать если == 2 расшифровать
+decode_or_encode = 0  # Указывает что сделать с текстом, если == 1 - зашифровать если == 2 - расшифровать
 
 
 @bot.message_handler(commands=['start'])
@@ -22,10 +22,19 @@ def start(message):
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
 
 
+@bot.message_handler(commands=['help'])
+def start(message):
+    '''
+    Обрабатывает команду /help.
+    '''
+    bot.send_message(message.chat.id,
+                     f'Бот умеет зашифровывать и расшифровывать текст на латинице с помощью шифра Цезаря и шифра Виженера. Бот создан в качестве итогового проекта по дисциплине АиП. Словарь допустимых символов: {get_dict()}')
+
+
 @bot.message_handler(content_types=['text'])
 def mess(message):
     '''
-    Обрабатывает пользоваьельский ввод.
+    Обрабатывает пользовательский ввод.
     '''
     get_messsage_bot = message.text.strip().lower()
     global decode_or_encode
