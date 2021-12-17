@@ -30,8 +30,16 @@ class sumsTest(unittest.TestCase):
         self.assertEqual(index_to_char([43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68]), ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'])
 
     def test_index_to_char_2(self):
-        self.assertEqual(index_to_char([25, 56, 0, 62, 50, 47, 0, 55, 51, 46, 61, 62, 0, 57, 48, 0, 43, 0, 45, 57, 56, 64, 47, 60, 61, 43, 62, 51, 57, 56, 0, 57, 56, 0, 58, 57, 54, 51, 62, 51, 45, 43, 54, 0, 55, 43, 62, 62, 47, 60, 61, 0, 17, 56, 56, 43, 0, 32, 43, 64, 54, 57, 64, 56, 43, 0, 44, 63, 60, 61, 62, 0, 57, 63, 62]), ['I', 'n', ' ', 't', 'h', 'e', ' ', 'm', 'i', 'd', 's', 't', ' ', 'o', 'f', ' ', 'a', ' ', 'c', 'o', 'n', 'v', 'e', 'r', 's', 'a', 't', 'i', 'o', 'n', ' ', 'o', 'n', ' ', 'p', 'o', 'l', 'i', 't', 'i', 'c', 'a', 'l', ' ', 'm', 'a', 't', 't', 'e', 'r', 's', ' ', 'A', 'n', 'n', 'a', ' ', 'P', 'a', 'v', 'l', 'o', 'v', 'n', 'a', ' ', 'b', 'u', 'r', 's', 't', ' ', 'o', 'u', 't']
-)
+        self.assertEqual(index_to_char([25, 56, 0, 62, 50, 47, 0, 55, 51, 46, 61, 62, 0, 57, 48, 0, 43, 0, 45, 57, 56, 64, 47, 60, 61, 43, 62, 51, 57, 56, 0, 57, 56, 0, 58, 57, 54, 51, 62, 51, 45, 43, 54, 0, 55, 43, 62, 62, 47, 60, 61, 0, 17, 56, 56, 43, 0, 32, 43, 64, 54, 57, 64, 56, 43, 0, 44, 63, 60, 61, 62, 0, 57, 63, 62]), ['I', 'n', ' ', 't', 'h', 'e', ' ', 'm', 'i', 'd', 's', 't', ' ', 'o', 'f', ' ', 'a', ' ', 'c', 'o', 'n', 'v', 'e', 'r', 's', 'a', 't', 'i', 'o', 'n', ' ', 'o', 'n', ' ', 'p', 'o', 'l', 'i', 't', 'i', 'c', 'a', 'l', ' ', 'm', 'a', 't', 't', 'e', 'r', 's', ' ', 'A', 'n', 'n', 'a', ' ', 'P', 'a', 'v', 'l', 'o', 'v', 'n', 'a', ' ', 'b', 'u', 'r', 's', 't', ' ', 'o', 'u', 't'])
+
+    def test_main_encode_1(self):
+        self.assertEqual(main_decode('Hello world', 'key'), 'X n.3,53t.z')
+
+    def test_main_encode_2(self):
+        self.assertEqual(main_decode('abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'JJJJJJJJJJJJJJJJJJJJJJJJJJ')
+
+    def test_main_encode_3(self):
+        self.assertEqual(main_decode('abcABC1234567890!,. :;', 'ABCDEFA89Babcdefghijkl098 mnopqrstuvwxyz9CDEFGHIJKLMNOPQRSTUVWXYZGHIJKLMNOPQRSTUVWXYZ'), 'JJJxxxruutVVVVVLHECAEE')
 
 if __name__ == "__main__":
     unittest.main()
