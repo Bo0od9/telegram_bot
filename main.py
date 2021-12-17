@@ -23,7 +23,7 @@ def start(message):
 
 
 @bot.message_handler(commands=['help'])
-def start(message):
+def help(message):
     '''
     Обрабатывает команду /help.
     '''
@@ -168,8 +168,7 @@ def mess(message):
 
         bot.register_next_step_handler(message, add_text)
     elif get_messsage_bot == 'о боте':
-        bot.send_message(message.chat.id,
-                         f'Бот умеет зашифровывать и расшифровывать текст на латинице с помощью шифра Цезаря и шифра Виженера. Бот создан в качестве итогового проекта по дисциплине АиП. Словарь допустимых символов: {get_dict()}')
+        help(message)
 
 
 # bot.infinity_polling()
