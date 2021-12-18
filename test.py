@@ -81,14 +81,32 @@ class sumsTest(unittest.TestCase):
         chat = MagicMock(id=123)
         message = MagicMock(text="зашифровать сообщение", chat=chat)
         main.mess(message)
-        main_bot.send_message.assert_called_with(123,'Выберите метод шифрования', parse_mode='html', reply_markup=ANY)
+        main_bot.send_message.assert_called_with(123, 'Выберите метод шифрования', parse_mode='html', reply_markup=ANY)
 
     @mock.patch('main.bot')
     def test_main_encode_58(self, main_bot):
         chat = MagicMock(id=123)
-        message = MagicMock(text="зашифровать сообщение", chat=chat)
+        message = MagicMock(text="расшифровать сообщение", chat=chat)
         main.mess(message)
-        main_bot.send_message.assert_called_with(123,'Выберите метод шифрования', parse_mode='html', reply_markup=ANY)
+        main_bot.send_message.assert_called_with(123, 'Выберите метод шифрования', parse_mode='html', reply_markup=ANY)
+
+    @mock.patch('main.bot')
+    def test_main_encode_59(self, main_bot):
+        chat = MagicMock(id=123)
+        message = MagicMock(text="шифр виженера", chat=chat)
+        main.mess(message)
+        main_bot.send_message.assert_called_with(123, '<b>Введите текст для расшифрования:</b>', parse_mode='html',
+                                                 reply_markup=ANY)
+
+    @mock.patch('main.bot')
+    def test_main_encode_60(self, main_bot):
+        chat = MagicMock(id=123)
+        message = MagicMock(text="назад", chat=chat)
+        main.mess(message)
+        main_bot.send_message.assert_called_with(123,
+                                                 f"<b>Привет {message.from_user.first_name}</b>!\nЧем могу помочь?",
+                                                 parse_mode='html', reply_markup=ANY)
+
 
 if __name__ == "__main__":
     unittest.main()
