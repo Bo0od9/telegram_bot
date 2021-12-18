@@ -1,8 +1,7 @@
 import unittest
 from unittest import mock
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, ANY
 import main
-from unittest.mock import ANY
 from vigenere_chipher import char_to_index, index_to_char, decode, encode, main_encode, main_decode, \
     form_gamma_by_userkey
 from caesar_chipher import caesar_encode, caesar_decode
