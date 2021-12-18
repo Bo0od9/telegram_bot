@@ -2,7 +2,7 @@ import unittest
 from unittest import mock
 from unittest.mock import MagicMock
 import main
-from telebot import types
+from unittest.mock import ANY
 from vigenere_chipher import char_to_index, index_to_char, decode, encode, main_encode, main_decode, \
     form_gamma_by_userkey
 from caesar_chipher import caesar_encode, caesar_decode
@@ -82,10 +82,14 @@ class sumsTest(unittest.TestCase):
         chat = MagicMock(id=123)
         message = MagicMock(text="зашифровать сообщение", chat=chat)
         main.mess(message)
-        main_bot.send_message.assert_called_with(123, "Выберите метод шифрования", parse_mode='html',
-                                                 reply_markup=types.ReplyKeyboardMarkup(resize_keyboard=True,
-                                                                                        row_width=2))
+        main_bot.send_message.assert_called_with(123,'Выберите метод шифрования', parse_mode='html', reply_markup=ANY)
 
+    @mock.patch('main.bot')
+    def test_main_encode_58(self, main_bot):
+        chat = MagicMock(id=123)
+        message = MagicMock(text="зашифровать сообщение", chat=chat)
+        main.mess(message)
+        main_bot.send_message.assert_called_with(123,'Выберите метод шифрования', parse_mode='html', reply_markup=ANY)
 
 if __name__ == "__main__":
     unittest.main()
